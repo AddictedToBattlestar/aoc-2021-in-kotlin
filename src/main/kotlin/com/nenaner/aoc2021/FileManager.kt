@@ -1,4 +1,4 @@
-package com.nenaner.aoc2019
+package com.nenaner.aoc2021
 
 import org.springframework.stereotype.Component
 
