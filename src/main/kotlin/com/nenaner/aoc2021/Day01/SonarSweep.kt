@@ -11,7 +11,7 @@ class SonarSweep (
 ) {
     fun getDepthTrend(fileName: String): Int {
         val depthReadings = fileManager.readFile(fileName).map{it.toInt()}
-        var numberOfIncreases = 0;
+        var numberOfIncreases = 0
         var previousReading = depthReadings[0]
         for(index in 1..depthReadings.lastIndex) {
             if (depthReadings[index] > previousReading) {
@@ -20,6 +20,31 @@ class SonarSweep (
             previousReading = depthReadings[index]
         }
         outputLogger.info("day1-part1-getDepthTrend: ${numberOfIncreases}")
+        return numberOfIncreases
+    }
+
+    fun getDepthTrendSlidingWindow(fileName: String): Int {
+        val depthReadings = fileManager.readFile(fileName).map{it.toInt()}
+
+        val measurementWindowsAccumulator = mutableListOf<MeasurementWindowAccumulator>()
+        for(index in 0..depthReadings.lastIndex) {
+            for(measurementWindow in measurementWindowsAccumulator.filter { measurementWindowAccumulator -> measurementWindowAccumulator.accumulationCount < 3 }) {
+                measurementWindow.accumulationCount++
+                measurementWindow.totalDepth = measurementWindow.totalDepth + depthReadings[index]
+            }
+            val newMeasurementWindow = MeasurementWindowAccumulator(index, 1, depthReadings[index])
+            measurementWindowsAccumulator.add(newMeasurementWindow)
+        }
+
+        var numberOfIncreases = 0
+        var previousReading = measurementWindowsAccumulator[0].totalDepth
+        for(index in 1 .. measurementWindowsAccumulator.lastIndex) {
+            if (measurementWindowsAccumulator[index].totalDepth > previousReading) {
+                numberOfIncreases++
+            }
+            previousReading = measurementWindowsAccumulator[index].totalDepth
+        }
+        outputLogger.info("day1-part2-getDepthTrendSlidingWindow: ${numberOfIncreases}")
         return numberOfIncreases
     }
 }

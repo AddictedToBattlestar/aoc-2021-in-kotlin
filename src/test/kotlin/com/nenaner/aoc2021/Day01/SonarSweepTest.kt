@@ -24,11 +24,21 @@ internal class SonarSweepTest {
 
     @Test
     internal fun `it can process the example provided in part 1`() {
-        subject.getDepthTrend("day1-part1-example.txt").shouldBe(7)
+        subject.getDepthTrend("day1-example.txt").shouldBe(7)
     }
 
     @Test
     internal fun `it can process the problem provided in part 1`() {
-        subject.getDepthTrend("day1-part1.txt").shouldNotBe(0)
+        subject.getDepthTrend("day1.txt").shouldNotBe(0)
+    }
+
+    @Test
+    internal fun `it can process the example provided in part 2`() {
+        subject.getDepthTrendSlidingWindow("day1-example.txt").shouldBe(5)
+    }
+
+    @Test
+    internal fun `it can process the problem provided in part 2`() {
+        subject.getDepthTrendSlidingWindow("day1.txt").shouldNotBe(0)
     }
 }
