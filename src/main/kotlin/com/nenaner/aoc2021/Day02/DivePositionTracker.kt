@@ -11,7 +11,7 @@ class DivePositionTracker (
         val diveReadings = fileManager.readFile(fileName)
         val currentDiveLocation = DiveLocation(0,0)
         for(rawDiveReading in diveReadings) {
-            var (direction, distance) = rawDiveReading.split(" ")
+            val (direction, distance) = rawDiveReading.split(" ")
             when(direction) {
                 "forward" -> currentDiveLocation.changeHorizontalPosition(distance.toInt())
                 "down" -> currentDiveLocation.changeVerticalPosition(distance.toInt())
@@ -21,6 +21,23 @@ class DivePositionTracker (
         }
         val result = currentDiveLocation.horizontalPosition * currentDiveLocation.depth
         outputLogger.info("day2-part1-getResultingDiveLocation: ${result}")
+        return result
+    }
+
+    fun getResultingDiveLocationWithAiming(fileName: String): Int {
+        val diveReadings = fileManager.readFile(fileName)
+        val currentDiveLocation = DiveLocation(0,0)
+        for(rawDiveReading in diveReadings) {
+            val (direction, distance) = rawDiveReading.split(" ")
+            when(direction) {
+                "forward" -> currentDiveLocation.aimForward(distance.toInt())
+                "down" -> currentDiveLocation.aimDown(distance.toInt())
+                "up" -> currentDiveLocation.aimUp(distance.toInt() * -1)
+            }
+            outputLogger.debug("current location - currentDiveLocation: ${currentDiveLocation}")
+        }
+        val result = currentDiveLocation.horizontalPosition * currentDiveLocation.depth
+        outputLogger.info("day2-part2-getResultingDiveLocationWithAiming: ${result}")
         return result
     }
 }

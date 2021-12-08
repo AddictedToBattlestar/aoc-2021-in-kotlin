@@ -31,4 +31,14 @@ internal class DivePositionTrackerTest {
     internal fun `it can process the problem provided in part 1`() {
         subject.getResultingDiveLocation("day2.txt").shouldNotBe(0)
     }
+
+    @Test
+    internal fun `it can process the example provided in part 2`() {
+        subject.getResultingDiveLocationWithAiming("day2-example.txt").shouldBe(900)
+    }
+
+    @Test
+    internal fun `it can process the problem provided in part 2`() {
+        subject.getResultingDiveLocationWithAiming("day2.txt").shouldNotBe(0)
+    }
 }
