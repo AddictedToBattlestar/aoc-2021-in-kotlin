@@ -9,9 +9,7 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.SpyK
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
 internal class SonarSweepTest {
     @SpyK private var fileManager = FileManager()
     @SpyK private var OutputLogger = OutputLogger()
