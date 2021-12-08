@@ -19,7 +19,7 @@ class SonarSweep (
             }
             previousReading = depthReadings[index]
         }
-        outputLogger.info("day1-part1-getDepthTrend: ${numberOfIncreases}")
+        outputLogger.info("day1-part1-getDepthTrend: $numberOfIncreases")
         return numberOfIncreases
     }
 
@@ -44,7 +44,7 @@ class SonarSweep (
             }
             previousReading = measurementWindowsAccumulator[index].totalDepth
         }
-        outputLogger.info("day1-part2-getDepthTrendSlidingWindow: ${numberOfIncreases}")
+        outputLogger.info("day1-part2-getDepthTrendSlidingWindow: $numberOfIncreases")
         return numberOfIncreases
     }
 }

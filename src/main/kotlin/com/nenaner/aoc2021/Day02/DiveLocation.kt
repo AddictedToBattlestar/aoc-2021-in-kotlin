@@ -1,9 +1,8 @@
 package com.nenaner.aoc2021.Day02
 
-class DiveLocation(
-    var horizontalPosition: Int,
-    var depth: Int
-) {
+class DiveLocation {
+    var horizontalPosition = 0
+    var depth = 0
     var aim = 0
 
     fun changeHorizontalPosition(distance: Int) {

@@ -9,9 +9,9 @@ class DivePositionTracker (
 ) {
     fun getResultingDiveLocation(fileName: String): Int {
         val diveReadings = fileManager.readFile(fileName)
-        val currentDiveLocation = DiveLocation(0,0)
-        for(rawDiveReading in diveReadings) {
-            val (direction, distance) = rawDiveReading.split(" ")
+        val currentDiveLocation = DiveLocation()
+        for(diveReading in diveReadings) {
+            val (direction, distance) = diveReading.split(" ")
             when(direction) {
                 "forward" -> currentDiveLocation.changeHorizontalPosition(distance.toInt())
                 "down" -> currentDiveLocation.changeVerticalPosition(distance.toInt())
@@ -20,15 +20,15 @@ class DivePositionTracker (
             outputLogger.debug("current location - horizontalPosition: ${currentDiveLocation.horizontalPosition}, depth: ${currentDiveLocation.depth}")
         }
         val result = currentDiveLocation.horizontalPosition * currentDiveLocation.depth
-        outputLogger.info("day2-part1-getResultingDiveLocation: ${result}")
+        outputLogger.info("day2-part1-getResultingDiveLocation: $result")
         return result
     }
 
     fun getResultingDiveLocationWithAiming(fileName: String): Int {
         val diveReadings = fileManager.readFile(fileName)
-        val currentDiveLocation = DiveLocation(0,0)
-        for(rawDiveReading in diveReadings) {
-            val (direction, distance) = rawDiveReading.split(" ")
+        val currentDiveLocation = DiveLocation()
+        for(diveReading in diveReadings) {
+            val (direction, distance) = diveReading.split(" ")
             when(direction) {
                 "forward" -> currentDiveLocation.aimForward(distance.toInt())
                 "down" -> currentDiveLocation.aimDown(distance.toInt())
@@ -37,7 +37,7 @@ class DivePositionTracker (
             outputLogger.debug("current location - currentDiveLocation: ${currentDiveLocation}")
         }
         val result = currentDiveLocation.horizontalPosition * currentDiveLocation.depth
-        outputLogger.info("day2-part2-getResultingDiveLocationWithAiming: ${result}")
+        outputLogger.info("day2-part2-getResultingDiveLocationWithAiming: $result")
         return result
     }
 }
