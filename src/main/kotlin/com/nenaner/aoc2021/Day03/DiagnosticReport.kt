@@ -1,13 +1,15 @@
 package com.nenaner.aoc2021.Day03
 
 import com.nenaner.aoc2021.FileManager
-import com.nenaner.aoc2021.OutputLogger
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 import kotlin.math.pow
 
+@Component
 class DiagnosticReport (
-    private val fileManager: FileManager,
-    private val outputLogger: OutputLogger
+    private val fileManager: FileManager
 ) {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
     fun calculatePowerConsumption(fileName: String): Int {
         val rawData = fileManager.readFile(fileName)
         val reportWidth = rawData[0].length
@@ -32,8 +34,8 @@ class DiagnosticReport (
                 epsilonRate[index] = 1
             }
         }
-        outputLogger.debug("gamma rate: $gammaRate")
-        outputLogger.debug("epsilon rate: $epsilonRate")
+        logger.debug("gamma rate: $gammaRate")
+        logger.debug("epsilon rate: $epsilonRate")
         var gammaValue = 0.0;
         var epsilonValue = 0.0;
         for (index in 0 until reportWidth) {
@@ -45,10 +47,10 @@ class DiagnosticReport (
                 epsilonValue += binaryValue
             }
         }
-        outputLogger.debug("gamma value: $gammaValue")
-        outputLogger.debug("epsilon value: $epsilonValue")
+        logger.debug("gamma value: $gammaValue")
+        logger.debug("epsilon value: $epsilonValue")
         val totalPowerConsumption = (gammaValue * epsilonValue).toInt()
-        outputLogger.info("the power consumption of the submarine is: $totalPowerConsumption")
+        logger.info("the power consumption of the submarine is: $totalPowerConsumption")
         return totalPowerConsumption
     }
 }

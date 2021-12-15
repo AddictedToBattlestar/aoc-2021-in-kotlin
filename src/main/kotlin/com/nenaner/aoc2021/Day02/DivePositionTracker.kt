@@ -1,12 +1,14 @@
 package com.nenaner.aoc2021.Day02
 
 import com.nenaner.aoc2021.FileManager
-import com.nenaner.aoc2021.OutputLogger
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 
+@Component
 class DivePositionTracker (
-    private val fileManager: FileManager,
-    private val outputLogger: OutputLogger
+    private val fileManager: FileManager
 ) {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
     fun getResultingDiveLocation(fileName: String): Int {
         val diveReadings = fileManager.readFile(fileName)
         val currentDiveLocation = DiveLocation()
@@ -17,10 +19,10 @@ class DivePositionTracker (
                 "down" -> currentDiveLocation.changeVerticalPosition(distance.toInt())
                 "up" -> currentDiveLocation.changeVerticalPosition(distance.toInt() * -1)
             }
-            outputLogger.debug("current location - horizontalPosition: ${currentDiveLocation.horizontalPosition}, depth: ${currentDiveLocation.depth}")
+            logger.debug("current location - horizontalPosition: ${currentDiveLocation.horizontalPosition}, depth: ${currentDiveLocation.depth}")
         }
         val result = currentDiveLocation.horizontalPosition * currentDiveLocation.depth
-        outputLogger.info("day2-part1-getResultingDiveLocation: $result")
+        logger.info("day2-part1-getResultingDiveLocation: $result")
         return result
     }
 
@@ -34,10 +36,10 @@ class DivePositionTracker (
                 "down" -> currentDiveLocation.aimDown(distance.toInt())
                 "up" -> currentDiveLocation.aimUp(distance.toInt() * -1)
             }
-            outputLogger.debug("current location - currentDiveLocation: ${currentDiveLocation}")
+            logger.debug("current location - currentDiveLocation: ${currentDiveLocation}")
         }
         val result = currentDiveLocation.horizontalPosition * currentDiveLocation.depth
-        outputLogger.info("day2-part2-getResultingDiveLocationWithAiming: $result")
+        logger.info("day2-part2-getResultingDiveLocationWithAiming: $result")
         return result
     }
 }

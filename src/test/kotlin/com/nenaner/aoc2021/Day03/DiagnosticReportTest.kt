@@ -1,7 +1,6 @@
 package com.nenaner.aoc2021.Day03
 
 import com.nenaner.aoc2021.FileManager
-import com.nenaner.aoc2021.OutputLogger
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.MockKAnnotations
@@ -11,13 +10,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class DiagnosticReportTest {
-    @SpyK
-    private var fileManager = FileManager()
-    @SpyK
-    private var OutputLogger = OutputLogger()
+    @SpyK private var fileManager = FileManager()
 
-    @InjectMockKs
-    lateinit var subject: DiagnosticReport
+    @InjectMockKs lateinit var subject: DiagnosticReport
 
     @BeforeEach
     fun setup() = MockKAnnotations.init(this)

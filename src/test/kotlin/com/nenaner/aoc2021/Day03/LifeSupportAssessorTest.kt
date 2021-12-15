@@ -1,7 +1,6 @@
 package com.nenaner.aoc2021.Day03
 
 import com.nenaner.aoc2021.FileManager
-import com.nenaner.aoc2021.OutputLogger
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.MockKAnnotations
@@ -13,8 +12,6 @@ import org.junit.jupiter.api.Test
 internal class LifeSupportAssessorTest {
     @SpyK
     private var fileManager = FileManager()
-    @SpyK
-    private var OutputLogger = OutputLogger()
 
     @InjectMockKs
     lateinit var subject: LifeSupportAssessor

@@ -1,29 +1,31 @@
 package com.nenaner.aoc2021.Day03
 
 import com.nenaner.aoc2021.FileManager
-import com.nenaner.aoc2021.OutputLogger
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 import kotlin.math.pow
 
+@Component
 class LifeSupportAssessor (
-    private val fileManager: FileManager,
-    private val outputLogger: OutputLogger
+    private val fileManager: FileManager
 ) {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
     fun getLifeSupportRating(fileName: String): Int {
         val rawFileData = fileManager.readFile(fileName)
 
         val rawOxygenGeneratorRating = findLifeSupportRating(rawFileData, true)
-        outputLogger.debug("Oxygen generator rating (raw): $rawOxygenGeneratorRating")
+        logger.debug("Oxygen generator rating (raw): $rawOxygenGeneratorRating")
         val rawCarbonScrubberRating = findLifeSupportRating(rawFileData, false)
-        outputLogger.debug("CO2 scrubber rating: $rawCarbonScrubberRating")
+        logger.debug("CO2 scrubber rating: $rawCarbonScrubberRating")
 
 
         val rawOxygenGeneratorValue = calculateValueFromBinaryString(rawOxygenGeneratorRating)
-        outputLogger.debug("Oxygen generator rating: $rawOxygenGeneratorValue")
+        logger.debug("Oxygen generator rating: $rawOxygenGeneratorValue")
         val rawCarbonScrubberValue = calculateValueFromBinaryString(rawCarbonScrubberRating)
-        outputLogger.debug("CO2 scrubber rating: $rawCarbonScrubberValue")
+        logger.debug("CO2 scrubber rating: $rawCarbonScrubberValue")
 
         val lifeSupportRating = (rawOxygenGeneratorValue * rawCarbonScrubberValue).toInt()
-        outputLogger.info("Life support rating: $lifeSupportRating")
+        logger.info("Life support rating: $lifeSupportRating")
         return lifeSupportRating
     }
 
