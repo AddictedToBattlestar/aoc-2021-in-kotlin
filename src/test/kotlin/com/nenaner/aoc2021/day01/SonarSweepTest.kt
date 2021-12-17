@@ -1,6 +1,6 @@
-package com.nenaner.aoc2021.Day01
+package com.nenaner.aoc2021.day01
 
-import com.nenaner.aoc2021.FileManager
+import com.nenaner.aoc2021.utils.FileManager
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.MockKAnnotations

@@ -1,4 +1,4 @@
-package com.nenaner.aoc2021.Day02
+package com.nenaner.aoc2021.day02
 
 class DiveLocation {
     var horizontalPosition = 0

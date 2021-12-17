@@ -1,6 +1,6 @@
-package com.nenaner.aoc2021.Day03
+package com.nenaner.aoc2021.day03
 
-import com.nenaner.aoc2021.FileManager
+import com.nenaner.aoc2021.utils.FileManager
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import kotlin.math.pow
@@ -45,23 +45,22 @@ class LifeSupportAssessor (
         var rawDiagnosticData = rawFileData
         while (rawDiagnosticData.size > 1) {
             val diagnosticData = buildLifeSupportData(rawDiagnosticData, columnIndex)
-            // TODO: This is ugly and needs to be refactored
-            rawDiagnosticData = if (findMostCommonValue) {
-                if (diagnosticData.linesWithLeadingOnes.size < diagnosticData.linesWithLeadingZeroes.size) {
-                    diagnosticData.linesWithLeadingZeroes
-                } else {
-                    diagnosticData.linesWithLeadingOnes
-                }
-            } else {
-                if (diagnosticData.linesWithLeadingOnes.size < diagnosticData.linesWithLeadingZeroes.size) {
-                    diagnosticData.linesWithLeadingOnes
-                } else {
-                    diagnosticData.linesWithLeadingZeroes
-                }
-            }
+            rawDiagnosticData = findDiagnosticDataForNextCycle(findMostCommonValue, diagnosticData)
             columnIndex++
         }
         return rawDiagnosticData[0]
+    }
+
+    private fun findDiagnosticDataForNextCycle(
+        findMostCommonValue: Boolean,
+        diagnosticData: LifeSupportTracker
+    ): List<String> {
+        val areThereMoreZeroesThanOnes = diagnosticData.linesWithLeadingOnes.size < diagnosticData.linesWithLeadingZeroes.size;
+        return if (findMostCommonValue && areThereMoreZeroesThanOnes || !findMostCommonValue && !areThereMoreZeroesThanOnes) {
+            diagnosticData.linesWithLeadingZeroes
+        } else {
+            diagnosticData.linesWithLeadingOnes
+        }
     }
 
     private fun buildLifeSupportData(rawData: List<String>, columnIndex: Int): LifeSupportTracker {

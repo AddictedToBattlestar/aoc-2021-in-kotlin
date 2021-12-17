@@ -1,4 +1,4 @@
-package com.nenaner.aoc2021.Day01
+package com.nenaner.aoc2021.day01
 
 class MeasurementWindowAccumulator(
     val indexMarkerForStartOfWindow: Int,

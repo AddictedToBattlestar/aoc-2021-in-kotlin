@@ -1,4 +1,4 @@
-package com.nenaner.aoc2021.Day03
+package com.nenaner.aoc2021.day03
 
 class DiagnosticTally {
     var countOfZeroes = 0
