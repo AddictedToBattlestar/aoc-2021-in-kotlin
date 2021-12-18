@@ -8,16 +8,16 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.SpyK
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.slf4j.LoggerFactory
 
 internal class LifeSupportAssessorTest {
-    @SpyK
-    private var fileManager = FileManager()
+    private val logger = LoggerFactory.getLogger(this.javaClass)
 
-    @InjectMockKs
-    lateinit var subject: LifeSupportAssessor
+    @SpyK private var fileManager = FileManager()
 
-    @BeforeEach
-    fun setup() = MockKAnnotations.init(this)
+    @InjectMockKs lateinit var subject: LifeSupportAssessor
+
+    @BeforeEach fun setup() = MockKAnnotations.init(this)
 
     @Test
     internal fun `it can process the example provided in part 2`() {
@@ -26,6 +26,7 @@ internal class LifeSupportAssessorTest {
 
     @Test
     internal fun `it can process the problem provided in part 2`() {
-        subject.getLifeSupportRating("day3.txt").shouldNotBe(0)
+        val result = subject.getLifeSupportRating("day3.txt")
+        logger.info("Life support rating: $result")
     }
 }

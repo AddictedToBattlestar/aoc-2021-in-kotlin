@@ -8,8 +8,11 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.SpyK
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.slf4j.LoggerFactory
 
 internal class DiagnosticReportTest {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
+
     @SpyK private var fileManager = FileManager()
 
     @InjectMockKs lateinit var subject: DiagnosticReport
@@ -24,6 +27,7 @@ internal class DiagnosticReportTest {
 
     @Test
     internal fun `it can process the problem provided in part 1`() {
-        subject.calculatePowerConsumption("day3.txt").shouldNotBe(0)
+        val result = subject.calculatePowerConsumption("day3.txt")
+        logger.info("the power consumption of the submarine is: $result")
     }
 }

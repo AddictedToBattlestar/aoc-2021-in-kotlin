@@ -24,9 +24,7 @@ class LifeSupportAssessor (
         val rawCarbonScrubberValue = calculateValueFromBinaryString(rawCarbonScrubberRating)
         logger.debug("CO2 scrubber rating: $rawCarbonScrubberValue")
 
-        val lifeSupportRating = (rawOxygenGeneratorValue * rawCarbonScrubberValue).toInt()
-        logger.info("Life support rating: $lifeSupportRating")
-        return lifeSupportRating
+        return (rawOxygenGeneratorValue * rawCarbonScrubberValue).toInt()
     }
 
     private fun calculateValueFromBinaryString(binaryString: String): Double {

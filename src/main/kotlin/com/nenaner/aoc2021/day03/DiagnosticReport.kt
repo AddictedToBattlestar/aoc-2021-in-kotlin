@@ -50,7 +50,7 @@ class DiagnosticReport (
         logger.debug("gamma value: $gammaValue")
         logger.debug("epsilon value: $epsilonValue")
         val totalPowerConsumption = (gammaValue * epsilonValue).toInt()
-        logger.info("the power consumption of the submarine is: $totalPowerConsumption")
+
         return totalPowerConsumption
     }
 }

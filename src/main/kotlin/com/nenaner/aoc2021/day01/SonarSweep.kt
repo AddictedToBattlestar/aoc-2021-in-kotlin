@@ -1,14 +1,12 @@
 package com.nenaner.aoc2021.day01
 
 import com.nenaner.aoc2021.utils.FileManager
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
 class SonarSweep (
     private val fileManager: FileManager,
 ) {
-    private val logger = LoggerFactory.getLogger(this.javaClass)
     fun getDepthTrend(fileName: String): Int {
         val depthReadings = fileManager.readFile(fileName).map{it.toInt()}
         var numberOfIncreases = 0
@@ -19,7 +17,6 @@ class SonarSweep (
             }
             previousReading = depthReadings[index]
         }
-        logger.info("day1-part1-getDepthTrend: $numberOfIncreases")
         return numberOfIncreases
     }
 
@@ -44,7 +41,6 @@ class SonarSweep (
             }
             previousReading = measurementWindowsAccumulator[index].totalDepth
         }
-        logger.info("day1-part2-getDepthTrendSlidingWindow: $numberOfIncreases")
         return numberOfIncreases
     }
 }

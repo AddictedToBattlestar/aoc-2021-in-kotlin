@@ -12,34 +12,30 @@ class DivePositionTracker (
     fun getResultingDiveLocation(fileName: String): Int {
         val diveReadings = fileManager.readFile(fileName)
         val currentDiveLocation = DiveLocation()
-        for(diveReading in diveReadings) {
+        for (diveReading in diveReadings) {
             val (direction, distance) = diveReading.split(" ")
-            when(direction) {
+            when (direction) {
                 "forward" -> currentDiveLocation.changeHorizontalPosition(distance.toInt())
                 "down" -> currentDiveLocation.changeVerticalPosition(distance.toInt())
                 "up" -> currentDiveLocation.changeVerticalPosition(distance.toInt() * -1)
             }
             logger.debug("current location - horizontalPosition: ${currentDiveLocation.horizontalPosition}, depth: ${currentDiveLocation.depth}")
         }
-        val result = currentDiveLocation.horizontalPosition * currentDiveLocation.depth
-        logger.info("day2-part1-getResultingDiveLocation: $result")
-        return result
+        return currentDiveLocation.horizontalPosition * currentDiveLocation.depth
     }
 
     fun getResultingDiveLocationWithAiming(fileName: String): Int {
         val diveReadings = fileManager.readFile(fileName)
         val currentDiveLocation = DiveLocation()
-        for(diveReading in diveReadings) {
+        for (diveReading in diveReadings) {
             val (direction, distance) = diveReading.split(" ")
-            when(direction) {
+            when (direction) {
                 "forward" -> currentDiveLocation.aimForward(distance.toInt())
                 "down" -> currentDiveLocation.aimDown(distance.toInt())
                 "up" -> currentDiveLocation.aimUp(distance.toInt() * -1)
             }
             logger.debug("current location - currentDiveLocation: ${currentDiveLocation}")
         }
-        val result = currentDiveLocation.horizontalPosition * currentDiveLocation.depth
-        logger.info("day2-part2-getResultingDiveLocationWithAiming: $result")
-        return result
+        return currentDiveLocation.horizontalPosition * currentDiveLocation.depth
     }
 }

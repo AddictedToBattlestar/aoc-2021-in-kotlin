@@ -6,10 +6,14 @@ import io.kotest.matchers.shouldNotBe
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.SpyK
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.slf4j.LoggerFactory
 
 internal class HydroThermalVentDetectorTest {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
+
     @SpyK private var fileManager = FileManager()
     @SpyK private var simpleVentLocationPlotter = SimpleVentLocationPlotter()
     @SpyK private var ventLocationPlotter = VentLocationPlotter()
@@ -26,7 +30,9 @@ internal class HydroThermalVentDetectorTest {
 
     @Test
     internal fun `it can process the problem provided in part 1`() {
-        subject.assessSeverityOfSimpleVents("day5.txt").shouldNotBe(0)
+        val result = subject.assessSeverityOfSimpleVents("day5.txt")
+        logger.info("The number of locations where at least 2 vents overlap is: $result")
+        assertNotEquals(0, result)
     }
 
     @Test
@@ -36,6 +42,8 @@ internal class HydroThermalVentDetectorTest {
 
     @Test
     internal fun `it can process the problem provided in part 2`() {
-        subject.assessSeverityOfComplexVents("day5.txt").shouldNotBe(0)
+        val result = subject.assessSeverityOfComplexVents("day5.txt")
+        logger.info("The number of locations where at least 2 vents overlap is: $result")
+        assertNotEquals(0, result)
     }
 }

@@ -41,7 +41,6 @@ class HydroThermalVentDetector (
                 countOfLocationsWhereMoreThanOneVentIsPresent++
             }
         }
-        logger.info("The number of locations where at least 3 vents overlap is: $countOfLocationsWhereMoreThanOneVentIsPresent")
         return countOfLocationsWhereMoreThanOneVentIsPresent
     }
 
