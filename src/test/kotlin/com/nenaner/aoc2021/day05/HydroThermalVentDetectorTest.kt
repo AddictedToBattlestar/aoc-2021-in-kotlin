@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test
 
 internal class HydroThermalVentDetectorTest {
     @SpyK private var fileManager = FileManager()
+    @SpyK private var simpleVentLocationPlotter = SimpleVentLocationPlotter()
+    @SpyK private var ventLocationPlotter = VentLocationPlotter()
 
     @InjectMockKs lateinit var subject: HydroThermalVentDetector
 
@@ -19,11 +21,21 @@ internal class HydroThermalVentDetectorTest {
 
     @Test
     internal fun `it can process the example provided in part 1`() {
-        subject.assessSeverity("day5-example.txt").shouldBe(5)
+        subject.assessSeverityOfSimpleVents("day5-example.txt").shouldBe(5)
     }
 
     @Test
     internal fun `it can process the problem provided in part 1`() {
-        subject.assessSeverity("day5.txt").shouldNotBe(0)
+        subject.assessSeverityOfSimpleVents("day5.txt").shouldNotBe(0)
+    }
+
+    @Test
+    internal fun `it can process the example provided in part 2`() {
+        subject.assessSeverityOfComplexVents("day5-example.txt").shouldBe(12)
+    }
+
+    @Test
+    internal fun `it can process the problem provided in part 2`() {
+        subject.assessSeverityOfComplexVents("day5.txt").shouldNotBe(0)
     }
 }

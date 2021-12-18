@@ -4,21 +4,33 @@ import com.nenaner.aoc2021.utils.FileManager
 import org.slf4j.LoggerFactory
 
 class HydroThermalVentDetector (
-    private val fileManager: FileManager
+    private val fileManager: FileManager,
+    private val simpleVentLocationPlotter: SimpleVentLocationPlotter,
+    private val ventLocationPlotter: VentLocationPlotter
 ) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
-    fun assessSeverity(fileName: String): Int {
+
+    fun assessSeverityOfSimpleVents(fileName: String): Int {
+        return assessSeverity(fileName, false)
+    }
+
+    fun assessSeverityOfComplexVents(fileName: String): Int {
+        return assessSeverity(fileName, true)
+    }
+
+    private fun assessSeverity(fileName: String, includeDiagonals: Boolean): Int {
         val rawData = fileManager.readFile(fileName)
-        val locationAndVentMap = mutableMapOf<String, MutableList<String>>()
+        val locationAndVentMap = mutableMapOf<VentLocation, MutableList<String>>()
 
         for (ventDescription in rawData) {
-            val ventLocations: List<MappingLocation> = getLocationsOfVent(ventDescription)
+            logger.debug("Processing $ventDescription")
+            val ventLocations: List<VentLocation> = getLocationsOfVent(ventDescription, includeDiagonals)
             for (location in ventLocations) {
-                if(locationAndVentMap.containsKey(location.toString())) {
-                    val currentVentsAtLocation = locationAndVentMap[location.toString()]
+                if(locationAndVentMap.containsKey(location)) {
+                    val currentVentsAtLocation = locationAndVentMap[location]
                     currentVentsAtLocation?.add(ventDescription)
                 } else {
-                    locationAndVentMap[location.toString()] = mutableListOf(ventDescription)
+                    locationAndVentMap[location] = mutableListOf(ventDescription)
                 }
             }
         }
@@ -33,35 +45,11 @@ class HydroThermalVentDetector (
         return countOfLocationsWhereMoreThanOneVentIsPresent
     }
 
-    private fun getLocationsOfVent(ventDescription: String): List<MappingLocation> {
-        val descriptionParts = ventDescription.split(" ")
-        val startingLocation = buildMappingLocation(descriptionParts[0])
-        val endingLocation = buildMappingLocation(descriptionParts[2])
-
-        val xRange = listOf(startingLocation.x, endingLocation.x).sorted()
-        val yRange = listOf(startingLocation.y, endingLocation.y).sorted()
-        val ventLocations = mutableListOf<MappingLocation>()
-        if (startingLocation.x == endingLocation.x) {
-            for (y in yRange[0]..yRange[1]) {
-                val currentLocation = MappingLocation(startingLocation.x, y)
-                ventLocations.add(currentLocation)
-            }
+    private fun getLocationsOfVent(ventDescription: String, includeDiagonals: Boolean): List<VentLocation> {
+        return if (includeDiagonals) {
+            ventLocationPlotter.plot(ventDescription)
         } else {
-            if (startingLocation.y == endingLocation.y) {
-                for (x in xRange[0]..xRange[1]) {
-                    val currentLocation = MappingLocation(x, startingLocation.y)
-                    ventLocations.add(currentLocation)
-                }
-            }
+            simpleVentLocationPlotter.plot(ventDescription)
         }
-
-        return ventLocations
-    }
-
-
-
-    private fun buildMappingLocation(description: String): MappingLocation {
-        val rawLocationInfo = description.split(",").map { it.toInt() }
-        return MappingLocation(rawLocationInfo[0], rawLocationInfo[1])
     }
 }
