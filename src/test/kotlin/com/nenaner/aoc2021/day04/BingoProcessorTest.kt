@@ -18,12 +18,23 @@ internal class BingoProcessorTest {
 
     @Test
     internal fun `it can process the example provided in part 1`() {
-        subject.findFinalScore("day4-example.txt").shouldBe(4512)
+        subject.findFinalScore("day4-example.txt", false).shouldBe(4512)
     }
 
     @Test
     internal fun `it can process the problem provided in part 1`() {
-        val result = subject.findFinalScore("day4.txt")
+        val result = subject.findFinalScore("day4.txt", false)
+        Assertions.assertNotEquals(0, result)
+    }
+
+    @Test
+    internal fun `it can process the example provided in part 2`() {
+        subject.findFinalScore("day4-example.txt", true).shouldBe(1924)
+    }
+
+    @Test
+    internal fun `it can process the problem provided in part 2`() {
+        val result = subject.findFinalScore("day4.txt", true)
         Assertions.assertNotEquals(0, result)
     }
 }

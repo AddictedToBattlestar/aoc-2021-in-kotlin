@@ -7,7 +7,7 @@ class BingoProcessor (
     private val fileManager: FileManager
 ) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
-    fun findFinalScore(fileName: String): Int {
+    fun findFinalScore(fileName: String, goUntilTheEnd: Boolean): Int {
         val fileData = fileManager.readFile(fileName)
         val bingoBoards = buildBingoBoards(fileData)
         val bingoNumbers = fileData[0].split(",").map{it.toInt()}
@@ -15,13 +15,17 @@ class BingoProcessor (
         var winningBingoNumber: Int? = null
         playingBingo@ for (bingoNumber in bingoNumbers) {
             logger.debug("Number $bingoNumber has been called")
-            for (bingoBoard in bingoBoards) {
+            for (bingoBoard in bingoBoards.filter { !it.isBingoAchieved }) {
                 logger.debug("Bingo board index ID ${bingoBoard.boardIndexId} is being checked")
                 val isBingoAchieved = bingoBoard.markBingoNumber(bingoNumber)
                 if (isBingoAchieved) {
                     winningBingoBoard = bingoBoard
                     winningBingoNumber = bingoNumber
-                    break@playingBingo
+                    if (goUntilTheEnd) {
+                        logger.debug("Bingo board ${bingoBoard.boardIndexId} is being removed as it has won on bingo number $bingoNumber")
+                    } else {
+                        break@playingBingo
+                    }
                 }
             }
         }
@@ -30,7 +34,11 @@ class BingoProcessor (
             return 0
         }
 
-        logger.info("BINGO!!! The winning bingo board's indexId is: ${winningBingoBoard.boardIndexId}")
+        if (goUntilTheEnd) {
+            logger.info("The last remaining bingo board was ${winningBingoBoard.boardIndexId}")
+        } else {
+            logger.info("BINGO!!! The winning bingo board's indexId is ${winningBingoBoard.boardIndexId}")
+        }
         var sumOfAllUnMarkedNumbersOnWinningBoard = 0
         for(bingoRow in winningBingoBoard.bingoData) {
             sumOfAllUnMarkedNumbersOnWinningBoard += bingoRow.filter{!it.isMarked}.map{it.bingoNumber}.sum()

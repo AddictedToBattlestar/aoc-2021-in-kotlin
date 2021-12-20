@@ -5,7 +5,7 @@ class BingoBoard (
     val boardIndexId: Int
 ) {
     val bingoData: List<List<BingoMark>>
-    private var isBingoAchieved = false
+    var isBingoAchieved = false
         get() = field
 
     init {
